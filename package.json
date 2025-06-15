@@ -1,4 +1,6 @@
-{
+{   "engines": {
+        "node": "20.19.2"
+    },
   "name": "feedbacksystem",
   "version": "1.0.0",
   "main": "app.js",
