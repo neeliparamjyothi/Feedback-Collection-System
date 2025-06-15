@@ -1,0 +1,80 @@
+<%- layout('./layouts/boilerplate.ejs') %>
+
+<style>
+  .feedback-container {
+    background-color: #fdfdfd;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    max-width: 700px;
+    margin: auto;
+  }
+
+  .feedback-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #007bff;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .form-label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-select,
+  .form-control {
+    border-radius: 8px;
+    transition: border-color 0.3s;
+  }
+
+  .form-select:focus,
+  .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+
+  .btn-primary {
+    padding: 0.6rem 2rem;
+    font-weight: 600;
+    border-radius: 8px;
+  }
+
+  @media (max-width: 576px) {
+    .feedback-title {
+      font-size: 1.5rem;
+    }
+  }
+</style>
+
+<body>
+  <div class="container mt-5 feedback-container">
+    <h2 class="feedback-title"><%= form.title.charAt(0).toUpperCase() + form.title.slice(1) %></h2>
+    <form method="POST" action="/feedback/<%= form._id %>">
+      <% form.questions.forEach((question, index) => { %>
+        <div class="mb-4">
+          <label class="form-label"><%= question.text.charAt(0).toUpperCase() + question.text.slice(1)+"?" %>
+</label>
+
+          <% if (question.type === 'rating') { %>
+            <select class="form-select" name="answers" required>
+              <option disabled selected value="">Choose rating</option>
+              <option value="1">1 - Very Poor</option>
+              <option value="2">2 - Poor</option>
+              <option value="3">3 - Average</option>
+              <option value="4">4 - Good</option>
+              <option value="5">5 - Excellent</option>
+            </select>
+          <% } else if (question.type === 'comment') { %>
+            <textarea class="form-control" name="answers" rows="3" placeholder="Your comment..." required></textarea>
+          <% } %>
+        </div>
+      <% }); %>
+
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary">Submit Feedback</button>
+      </div>
+    </form>
+  </div>
+</body>

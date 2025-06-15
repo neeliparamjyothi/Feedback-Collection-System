@@ -1,0 +1,141 @@
+<%- layout('./layouts/boilerplate.ejs') %>
+
+<style>
+  body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .form-wrapper {
+    background-color: #ffffff;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    max-width: 700px;
+    margin: 40px auto;
+  }
+
+    h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: bold;
+    color: #333;
+    font-size: 2.2rem;
+    animation: fadeSlideDown 0.8s ease-out;
+    position: relative;
+  }
+
+  h1::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background-color: #007bff;
+    margin: 10px auto 0;
+    border-radius: 2px;
+  }
+
+  @keyframes fadeSlideDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .form-label {
+    font-weight: 600;
+    color: #444;
+  }
+
+  .form-control,
+  .form-select {
+    border-radius: 8px;
+    padding: 0.6rem;
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+
+  .form-control:focus,
+  .form-select:focus {
+    box-shadow: 0 0 6px rgba(0, 123, 255, 0.4);
+    border-color: #007bff;
+  }
+
+  .btn {
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 500;
+  }
+
+  .btn-secondary {
+    background-color: #6c757d;
+    border: none;
+  }
+
+  .btn-secondary:hover {
+    background-color: #5a6268;
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    border: none;
+  }
+
+  .btn-primary:hover {
+    background-color: #0069d9;
+  }
+
+  .question-box {
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    background-color: #fdfdfd;
+  }
+</style>
+
+<div class="form-wrapper">
+  <h1>Create New Feedback Form</h1>
+  <form action="/admin/forms" method="POST">
+    <div class="mb-4">
+      <label for="title" class="form-label">Form Title</label>
+      <input type="text" class="form-control" id="title" name="title" placeholder="Enter a title for this form" required>
+    </div>
+
+    <div id="questions-container"></div>
+
+    <div class="d-flex justify-content-start gap-2 mb-3">
+      <button type="button" class="btn btn-secondary" onclick="addQuestion()">+ Add Question</button>
+    </div>
+
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary w-50">Create Form</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  function addQuestion() {
+    const container = document.getElementById('questions-container');
+    const index = container.children.length;
+
+    const div = document.createElement('div');
+    div.classList.add('question-box');
+
+    div.innerHTML = `
+      <label class="form-label">Question ${index + 1}</label>
+      <input type="text" class="form-control mb-2" name="questions[${index}][text]" placeholder="Enter question text" required>
+      <select class="form-select" name="questions[${index}][type]" required>
+        <option value="" disabled selected>Select type</option>
+        <option value="rating">Rating</option>
+        <option value="comment">Comment</option>
+      </select>
+    `;
+
+    container.appendChild(div);
+  }
+</script>
+    

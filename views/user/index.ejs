@@ -1,0 +1,53 @@
+<%- layout("layouts/boilerplate.ejs") %>
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #f7faff, #e6ecf0);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .main {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .main button {
+    width: 130px;
+    height: 50px;
+    background-color: #28a745;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .main button:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.15);
+  }
+
+  .main a {
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    line-height: 50px;
+    text-align: center;
+  }
+</style>
+
+<div class="main">
+  <button><a class="admin" href="/user/signup">Signup</a></button>
+  <button><a class="admin" href="/user/login">Login</a></button>
+  <button><a class="admin" href="/user/logout">Logout</a></button>
+</div>

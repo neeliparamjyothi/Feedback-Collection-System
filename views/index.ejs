@@ -1,0 +1,117 @@
+<%- layout('./layouts/boilerplate.ejs') %>
+<style>
+  .card-title {
+    font-weight: 600;
+    font-size: 1.3rem;
+    color: #333;
+  }
+
+  .card {
+    border-radius: 1rem;
+    box-shadow: 4px 4px 26px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    border: none;
+  }
+
+  .card:hover {
+    transform: scale(1.01);
+  }
+
+  .btn {
+    min-width: 140px;
+    font-weight: 500;
+    border-radius: 0.6rem;
+  }
+
+  .header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .header-actions h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #007BFF;
+  }
+
+  .form-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+  }
+
+  .alert-info {
+    font-size: 1.1rem;
+    text-align: center;
+    background-color: #e9f7fd;
+    border: 1px solid #bde5f8;
+    color: #31708f;
+    border-radius: 0.75rem;
+    padding: 1rem;
+  }
+    .section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #007bff;
+    border-left: 5px solid #007bff;
+    padding-left: 15px;
+    margin-bottom: 1rem;
+    background: linear-gradient(to right, #eaf4ff, #ffffff);
+    border-radius: 6px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
+  @media (max-width: 576px) {
+    .header-actions {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .btn {
+      width: 100%;
+    }
+     .section-title {
+      font-size: 1.5rem;
+      padding-left: 10px;
+    }
+    .form-buttons {
+      flex-direction: column;
+      width: 100%;
+    }
+  }
+</style>
+
+<div class="container mt-5">
+  <div class="header-actions">
+    <h2 class="section-title">Available Feedback Forms</h2>
+    <% if (isAdmin) { %>
+      <a href="/admin/forms/new" class="btn btn-success">+ Create New Form</a>
+    <% } %>
+  </div>
+
+  <% if (Forms.length === 0) { %>
+    <div class="alert alert-info">No forms created yet.</div>
+  <% } %>
+
+  <% Forms.forEach(form => { %>
+    <div class="card mb-4 p-3">
+      <div class="card-body d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <h5 class="card-title m-0"><%= form.title %></h5>
+        <div class="form-buttons">
+          <% if (isAdmin) { %>
+            <a href="/results/<%= form._id %>/export" class="btn btn-outline-secondary">Export</a>
+            <a href="/form/<%= form._id %>/results" class="btn btn-outline-info">Show Feedback</a>
+            <a href="/form/<%= form._id %>/delete" class="btn btn-outline-danger">Delete</a>
+          <% } %>
+          <a href="/feedback/<%= form._id %>" class="btn btn-primary">Submit Feedback</a>
+        </div>
+      </div>
+    </div>
+  <% }) %>
+</div>

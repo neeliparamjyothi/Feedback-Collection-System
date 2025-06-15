@@ -1,0 +1,94 @@
+<%- layout("/layouts/boilerplate.ejs")%>
+
+<style>
+  .login-container {
+    margin-top: 60px;
+    max-width: 500px;
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .login-title {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .form-label {
+    font-weight: 500;
+  }
+
+  .btn-success {
+    width: 100%;
+    padding: 0.6rem;
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: 8px;
+  }
+
+  .form-control:focus {
+    box-shadow: 0 0 8px rgba(40, 167, 69, 0.5);
+    border-color: #28a745;
+  }
+
+  body {
+    background-color: #f4f7fa;
+  }
+</style>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6 login-container">
+      <h2 class="login-title">Login as User</h2>
+      <form action="/user/login" method="POST" class="needs-validation" novalidate>
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input
+            name="username"
+            id="username"
+            type="text"
+            class="form-control"
+            required
+          />
+          <div class="invalid-feedback">Enter your name</div>
+        </div>
+
+        <div class="mb-4">
+          <label for="password" class="form-label">Password</label>
+          <input
+            name="password"
+            id="password"
+            type="password"
+            class="form-control"
+            required
+          />
+          <div class="invalid-feedback">Enter your password</div>
+        </div>
+
+        <button class="btn btn-success">Login</button>
+      </form>
+      <div class="form-footer mt-3">
+        Don't have an account? <a href="/user/signup">Sign up</a><br/>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (() => {
+    'use strict';
+    const forms = document.querySelectorAll('.needs-validation');
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  })();
+</script>

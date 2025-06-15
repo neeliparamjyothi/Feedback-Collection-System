@@ -1,0 +1,63 @@
+<%- layout('./layouts/boilerplate.ejs') %>
+
+<div class="container my-5 p-4 shadow rounded bg-light">
+  <h2 class="mb-4 text-center text-primary"><%= form.title.charAt(0).toUpperCase() + form.title.slice(1)%> - Feedback Results</h2>
+
+  <!-- Display Chart Only If Ratings Exist -->
+  <% if (chartData.labels.length > 0) { %>
+    <div class="card p-4 mb-4">
+      <canvas id="feedbackChart" height="200"></canvas>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      const chartData = <%- JSON.stringify(chartData || { labels: [], datasets: [] }) %>;
+      const ctx = document.getElementById('feedbackChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: chartData,
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: true, position: 'top' },
+            tooltip: { enabled: true }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 5,
+              ticks: {
+                stepSize: 1
+              },
+              title: {
+                display: true,
+                text: 'Average Rating'
+              }
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Questions'
+              }
+            }
+          }
+        }
+      });
+    </script>
+  <% } else { %>
+    <div class="alert alert-warning text-center">No rating data available to display a chart.</div>
+  <% } %>
+
+  <!-- Display Comments -->
+  <div class="mt-5">
+    <h4 class="text-secondary">User Comments</h4>
+    <% if (commentList.length > 0) { %>
+      <ul class="list-group list-group-flush shadow-sm">
+        <% commentList.forEach(comment => { %>
+          <li class="list-group-item bg-white"><i class="bi bi-chat-left-text me-2 text-muted"></i><%= comment %></li>
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <p class="text-muted">No comments submitted yet.</p>
+    <% } %>
+  </div>
+</div>

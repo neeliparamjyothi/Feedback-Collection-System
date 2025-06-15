@@ -1,0 +1,71 @@
+<style>
+  .custom-navbar {
+    background: linear-gradient(90deg, #007BFF, #00BFFF);
+    padding: 10px 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .navbar-nav h2 {
+    color: white;
+    margin-right: 30px;
+    font-weight: bold;
+    font-size: 28px;
+  }
+
+  .admin-btn, .user-btn {
+    margin-left: 15px;
+    border: none;
+    background-color: #fff;
+    padding: 6px 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .admin-btn:hover, .user-btn:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.05);
+  }
+
+  .admin, .user {
+    text-decoration: none;
+    color: #007BFF;
+    font-weight: 500;
+  }
+
+  .admin:hover, .user:hover {
+    color: #0056b3;
+  }
+
+  @media (max-width: 768px) {
+    .navbar-nav {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .admin-btn, .user-btn {
+      margin: 5px 0;
+    }
+
+    .navbar-nav h2 {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+  }
+</style>
+
+<nav class="navbar navbar-expand-lg custom-navbar sticky-top">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav align-items-center">
+        <h2>Feedback&nbsp;System</h2>
+        <button class="admin-btn"><a class="admin" href="/admin">Admin</a></button>
+        <button class="user-btn"><a class="user" href="/user">User</a></button>
+      </div>
+    </div>
+  </div>
+</nav>
