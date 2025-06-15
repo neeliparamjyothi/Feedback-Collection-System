@@ -1,3 +1,6 @@
+if(process.env.NODE_ENV !="production"){
+    require('dotenv').config()
+}
 const express = require('express');
 const app = express();
 const port = 3030;
@@ -19,17 +22,29 @@ const adminRouter=require("./routes/admin.js");
 const userRouter=require("./routes/user.js");
 const formRouter=require("./routes/form.js");
 const responseRouter=require("./routes/response.js");
-let mongourl='mongodb://127.0.0.1:27017/feedbacksystem';
+const MongoStore = require('connect-mongo');
+let dburl=process.env.ATLASDB_URL;
 main()
    .then(()=>{
       console.log("connection successfull");
 })
 .catch(err => console.log(err));
 async function main() {
-    await mongoose.connect(mongourl);
+    await mongoose.connect(dburl);
 }
+const store=MongoStore.create({
+    mongoUrl:dburl,
+    crypto:{
+        secret:process.env.SECRET,
+    },
+    touchAfter: 24*3600,
+})
+store.on("error",()=>{
+    console.log("error in mongodb store");
+})
 const sessionOptions={
-    secret: 'secretkey',
+    store,
+    secret:process.env.SECRET,
     resave:false,
     saveUninitialized:true,
     cookie:{
